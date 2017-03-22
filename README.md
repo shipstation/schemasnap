@@ -94,7 +94,7 @@ The set up relies on the exact same environment as db2yaml, so if you need to se
 your environment checkout that section above. The command is run with the following
 syntax:
 
-	excel2yaml <syaml_path> <table_col_name> <field_col_name> <descr_col_name>
+	excel2yaml <yaml_path> <table_col_name> <field_col_name> <descr_col_name>
 		<path_to_excel_file> --update-only
 
 These arguments are defined by the following:
