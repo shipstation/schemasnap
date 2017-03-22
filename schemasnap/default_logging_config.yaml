@@ -1,0 +1,43 @@
+version: 1
+disable_existing_loggers: false
+loggers:
+  bin:
+    handlers: [console]
+    level: INFO
+    propagate: true
+  schemasnap:
+    handlers: [console]
+    level: INFO
+    propagate: true
+  sqlalchemy.engine:
+    handlers: [sql]
+    level: INFO
+    propagate: true
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: color
+  sql:
+    class: logging.NullHandler
+    formatter: simple
+    level: INFO
+    # To log SQL to a file, uncomment:
+    # class: logging.handlers.RotatingFileHandler
+    # filename: sql.log
+    # maxBytes: 10485760 # 10MB
+    # backupCount: 2
+    # encoding: utf8
+formatters:
+  color:
+    (): colorlog.ColoredFormatter
+    datefmt: '%H:%M:%S'
+    format: '%(bold)s%(blue)s%(asctime)s%(reset)s %(bold)s%(log_color)s%(levelname)-8s%(reset)s [%(name)s:%(lineno)s] %(message)s'
+    log_colors:
+      CRITICAL: red
+      DEBUG: green
+      ERROR: red
+      INFO: green
+      WARNING: yellow
+  simple:
+    format: '(%(threadName)s) %(asctime)s %(levelname)-8s [%(name)s|%(module)s:%(lineno)s] %(message)s'

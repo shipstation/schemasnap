@@ -1,0 +1,4 @@
+sql.log
+venv
+*.egg-info
+*.pyc

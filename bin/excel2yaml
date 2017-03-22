@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+import argparse
+import logging
+import os
+import sys
+
+import schemasnap.excel2yaml
+import schemasnap.log
+
+
+logger = logging.getLogger('bin.excel2yaml')
+schemasnap.log.init()
+
+
+p = argparse.ArgumentParser()
+p.add_argument('server',
+               help='Server name in schema doc you want to update')
+p.add_argument('schema',
+               help='Schema name in server directory you want to update')
+p.add_argument('tablecolname',
+               help='The name of the column in excel containing the table name')
+p.add_argument('colcolname',
+               help='The name of the column in excel containing the column name that should match the yaml')
+p.add_argument('desccolname',
+               help='The name of the column in excel containing the description for the column')
+p.add_argument('excelfile',
+               help='Path to excel file containing descriptions')
+p.add_argument('--update-only', '-u', action='store_true', default=False,
+               help='Do not create new tables nor add columns to existing ones')
+opts = p.parse_args()
+
+
+targetpath = os.path.join('servers', opts.server, opts.schema)
+if not os.path.exists(targetpath):
+    logger.error("Target path %s does not exist.", targetpath)
+    sys.exit(1)
+
+if not opts.update_only:
+    logger.error("""excel2yaml currently only supports update operations.
+    You must set the --update-only flag.""")
+    sys.exit(1)
+
+schemasnap.excel2yaml.main(opts.excelfile, opts.tablecolname, opts.colcolname, opts.desccolname, targetpath)
