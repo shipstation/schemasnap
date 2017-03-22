@@ -13,10 +13,8 @@ schemasnap.log.init()
 
 
 p = argparse.ArgumentParser()
-p.add_argument('server',
-               help='Server name in schema doc you want to update')
-p.add_argument('schema',
-               help='Schema name in server directory you want to update')
+p.add_argument('yamlpath',
+               help='Path to the existing YAML files that are to be updated')
 p.add_argument('tablecolname',
                help='The name of the column in excel containing the table name')
 p.add_argument('colcolname',
@@ -30,7 +28,7 @@ p.add_argument('--update-only', '-u', action='store_true', default=False,
 opts = p.parse_args()
 
 
-targetpath = os.path.join('servers', opts.server, opts.schema)
+targetpath = os.path.expanduser(opts.yamlpath)
 if not os.path.exists(targetpath):
     logger.error("Target path %s does not exist.", targetpath)
     sys.exit(1)
